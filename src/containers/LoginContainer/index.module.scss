@@ -16,19 +16,23 @@
     margin-top: 20px;
     align-self: center;
   }
+  p {
+    margin-top: 8px;
+    color: #fb4e5f;
+    font-size: 12px;
+  }
 }
 .registration {
-   display: flex;
-   align-items: center;
-   flex-direction: column;
-   margin-top: 44px;
-   gap: 12px;
-   a{
-       all: unset;
-       cursor: pointer;
-       margin-left: 4px;
-       color: $purple-color;
-       font-weight: bold;
-   }
-   
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 44px;
+  gap: 12px;
+  a {
+    all: unset;
+    cursor: pointer;
+    margin-left: 4px;
+    color: $purple-color;
+    font-weight: bold;
+  }
 }

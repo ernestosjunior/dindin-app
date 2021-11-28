@@ -6,12 +6,21 @@ function useAuth() {
     password: { value: "", error: "" },
   });
 
-  function setField(field, value, error = "") {
+  function setField(field, value) {
     setForm((prev) => ({
       ...prev,
       [field]: {
         ...prev[field],
         value,
+      },
+    }));
+  }
+
+  function setError(field, error) {
+    setForm((prev) => ({
+      ...prev,
+      [field]: {
+        ...prev[field],
         error,
       },
     }));
@@ -27,6 +36,7 @@ function useAuth() {
     setField,
     handleLogin,
     handleLogOut,
+    setError,
   };
 }
 
