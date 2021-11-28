@@ -1,0 +1,57 @@
+.backdrop {
+  position: fixed;
+  width: 100vw;
+  height: calc(100vh + 138px);
+  z-index: 2;
+  background-color: #3d3d3d7a;
+  padding-top: 79px;
+  padding-bottom: 66px;
+
+  .main {
+    margin: 0 auto;
+    z-index: 4;
+    width: 30vw;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 20px;
+
+    @media (max-width: 481px) {
+      width: 80vw;
+    }
+
+    @media (min-width: 482px) and (max-width: 768px) {
+      width: 60vw;
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      width: 40vw;
+    }
+
+    .headerModal {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 31px 34px 31px 34px;
+      svg {
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+      }
+
+      h1 {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 43px;
+        color: #000000;
+      }
+    }
+
+    .modalContent {
+      padding-left: 34px;
+      padding-right: 34px;
+      padding-bottom: 34px;
+    }
+  }
+}
