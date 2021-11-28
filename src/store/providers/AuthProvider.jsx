@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocalStorage } from "react-use";
-import AuthContext from "store/contexts/AuthContext";
+import { AuthContext } from "../contexts";
 
 function AuthProvider({ children }) {
   const [token, setToken, removeToken] = useLocalStorage("token", "");
