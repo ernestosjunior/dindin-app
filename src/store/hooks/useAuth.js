@@ -17,9 +17,9 @@ function useAuth() {
     }));
   }
 
-  async function handleLogin() {}
+  async function handleLogin(token, setToken) {}
 
-  function handleLogOut() {}
+  function handleLogOut(removeToken) {}
 
   return {
     form,
