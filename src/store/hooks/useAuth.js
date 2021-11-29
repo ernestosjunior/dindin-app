@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 
 function useAuth() {
   const [form, setForm] = useState({
+    firstName: { value: "", error: "" },
+    lastName: { value: "", error: "" },
     email: { value: "", error: "" },
     password: { value: "", error: "" },
   });
@@ -59,7 +61,7 @@ function useAuth() {
     const data = await response.json();
 
     if (!data.success) {
-      if (response.status === 404) {
+      if (data.error === "Invalid credentials") {
         toast.error("Credenciais inválidas.", {
           position: "top-right",
           autoClose: 5000,
@@ -87,6 +89,59 @@ function useAuth() {
     history.push("/");
   }
 
+  async function handleRegistration() {
+    const response = await fetch(baseURL + "/user/new", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstName: form.firstName.value,
+        lastName: form.lastName.value,
+        email: form.email.value,
+        password: form.password.value,
+        repeatPassword: form.password.value,
+      }),
+    });
+
+    if (!response.ok) {
+      return toast.error("Ocorreu um problema ao fazer o cadastro.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+
+    const data = await response.json();
+
+    if (!data.success) {
+      return toast.error("Ocorreu um problema ao fazer o cadastro.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+
+    toast.success("Cadastro efetuado com sucesso! 🎉", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+    setToken(data.data.token);
+    history.push("/");
+  }
+
   function handleLogOut() {
     removeToken();
     history.push("/login");
@@ -100,6 +155,7 @@ function useAuth() {
     handleLogOut,
     setError,
     token,
+    handleRegistration,
   };
 }
 

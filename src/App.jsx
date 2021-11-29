@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { AuthProvider } from "./store/providers";
-import { Login } from "./pages";
+import { Login, Registration } from "./pages";
 
 function App() {
   return (
@@ -9,6 +9,7 @@ function App() {
       <AuthProvider>
         <Switch>
           <Route path="/login" component={Login} />
+          <Route path="/cadastro" component={Registration} />
         </Switch>
       </AuthProvider>
     </Router>

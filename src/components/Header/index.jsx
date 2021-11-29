@@ -4,7 +4,7 @@ import { ReactComponent as LogOut } from "../../assets/svg/log-out.svg";
 import styles from "./index.module.scss";
 
 function Header() {
-  const dontRenderLogOut = ["/login"];
+  const dontRenderLogOut = ["/login", "/cadastro"];
   const path = window.location.pathname;
 
   return (

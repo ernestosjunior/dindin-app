@@ -5,20 +5,31 @@ import { useAuth } from "../../store/hooks";
 import { validateForm } from "./utils";
 import styles from "./index.module.scss";
 
-function LoginContainer() {
+function RegistrationContainer() {
   const [openModal, setOpenModal] = useState(true);
 
-  const { setField, form, setError, handleLogin } = useAuth();
+  const { setField, form, setError, handleRegistration } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!validateForm(form.email.value, form.password.value, setError)) return;
+    if (
+      !validateForm(
+        form.firstName.value,
+        form.email.value,
+        form.password.value,
+        setError
+      )
+    )
+      return;
 
-    await handleLogin();
+    handleRegistration();
   }
 
   useEffect(() => {
+    if (form.firstName.error && form.firstName.value.length) {
+      setError("firstName", "");
+    }
     if (form.email.error && form.email.value.length) {
       setError("email", "");
     }
@@ -30,12 +41,28 @@ function LoginContainer() {
 
   return (
     <Modal
-      title="Login"
+      title="Cadastro"
       opened={openModal}
       setOpened={setOpenModal}
       hideCloseButton
     >
       <form className={styles.form}>
+        <div>
+          <Input
+            id="firstName"
+            label="Nome"
+            onChange={(e) => setField(e.target.id, e.target.value)}
+          />
+          <p>{form.firstName.error}</p>
+        </div>
+        <div>
+          <Input
+            id="lastName"
+            label="Sobrenome"
+            onChange={(e) => setField(e.target.id, e.target.value)}
+          />
+          <p>{form.lastName.error}</p>
+        </div>
         <div>
           <Input
             id="email"
@@ -54,14 +81,14 @@ function LoginContainer() {
           />
           <p>{form.password.error}</p>
         </div>
-        <button onClick={(e) => handleSubmit(e)}>Entrar</button>
+        <button onClick={(e) => handleSubmit(e)}>Cadastre-se</button>
       </form>
-      <span className={styles.registration}>
-        Ainda não possui uma conta?
-        <Link to="/registration">Cadastre-se</Link>
+      <span className={styles.login}>
+        Já possui uma conta?
+        <Link to="/login">Login</Link>
       </span>
     </Modal>
   );
 }
 
-export default LoginContainer;
+export default RegistrationContainer;
