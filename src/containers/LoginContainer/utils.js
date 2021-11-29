@@ -6,6 +6,9 @@ export function validateForm(email, password, setError) {
   }
   if (!email) return setError("email", "O campo é obrigatório.");
   if (!password) return setError("password", "O campo é obrigatório.");
+  if (!email.includes("@")) {
+    return setError("email", "Insira um email válido. email@email.com");
+  }
 
   setError("email", "");
   setError("password", "");
