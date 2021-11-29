@@ -6,11 +6,11 @@ import { Login } from "./pages";
 function App() {
   return (
     <Router>
-      <Switch>
-        <AuthProvider>
+      <AuthProvider>
+        <Switch>
           <Route path="/login" component={Login} />
-        </AuthProvider>
-      </Switch>
+        </Switch>
+      </AuthProvider>
     </Router>
   );
 }

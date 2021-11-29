@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../contexts";
 
 function useAuth() {
   const [form, setForm] = useState({
     email: { value: "", error: "" },
     password: { value: "", error: "" },
   });
+
+  const { token } = useContext(AuthContext);
 
   function setField(field, value) {
     setForm((prev) => ({
