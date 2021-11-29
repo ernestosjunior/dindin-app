@@ -1,5 +1,8 @@
 import { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../contexts";
+import { baseURL } from "../../services/api";
+import { toast } from "react-toastify";
 
 function useAuth() {
   const [form, setForm] = useState({
@@ -7,7 +10,9 @@ function useAuth() {
     password: { value: "", error: "" },
   });
 
-  const { token } = useContext(AuthContext);
+  const { token, setToken, removeToken } = useContext(AuthContext);
+
+  const history = useHistory();
 
   function setField(field, value) {
     setForm((prev) => ({
@@ -29,9 +34,63 @@ function useAuth() {
     }));
   }
 
-  async function handleLogin(token, setToken) {}
+  async function handleLogin() {
+    const response = await fetch(baseURL + "/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: form.email.value,
+        password: form.password.value,
+      }),
+    });
 
-  function handleLogOut(removeToken) {}
+    if (!response.ok) {
+      return toast.error("Ocorreu um problema ao fazer login.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+
+    const data = await response.json();
+
+    if (!data.success) {
+      if (response.status === 404) {
+        toast.error("Credenciais inválidas.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        toast.error("Ocorreu um problema ao fazer login.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+      return;
+    }
+
+    setToken(data.data.token);
+    history.push("/");
+  }
+
+  function handleLogOut() {
+    removeToken();
+    history.push("/login");
+  }
 
   return {
     form,
@@ -40,6 +99,7 @@ function useAuth() {
     handleLogin,
     handleLogOut,
     setError,
+    token,
   };
 }
 

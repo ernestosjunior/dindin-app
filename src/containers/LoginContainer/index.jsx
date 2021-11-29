@@ -8,14 +8,14 @@ import styles from "./index.module.scss";
 function LoginContainer() {
   const [openModal, setOpenModal] = useState(true);
 
-  const { setField, form, setError } = useAuth();
+  const { setField, form, setError, handleLogin } = useAuth();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (!validateForm(form.email.value, form.password.value, setError)) return;
 
-    console.log(e);
+    await handleLogin();
   }
 
   useEffect(() => {

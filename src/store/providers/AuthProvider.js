@@ -5,11 +5,9 @@ import { AuthContext } from "../contexts";
 function AuthProvider({ children }) {
   const [token, setToken, removeToken] = useLocalStorage("token", "");
 
-  const values = { token, setToken, removeToken };
+  const value = { token, setToken, removeToken };
 
-  return (
-    <AuthContext.Provider values={values}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export default AuthProvider;
